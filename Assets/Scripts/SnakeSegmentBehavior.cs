@@ -7,17 +7,24 @@ public class SnakeSegmentBehavior : MonoBehaviour {
     private int mStackPosition = 0;
     private Transform mNextSegment = null;
     private SnakeSegmentBehavior mNextSnakeSegmentBehavior;
+    private Rigidbody rb;
 
     // Begin Unity Engine Code
     // Use this for initialization
     void Start () {
-
-	}
+        rb = GetComponent<Rigidbody>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	    
 	}
+
+    void FixedUpdate()
+    {
+        // DESTROY ALL PHYSICS EFFECTS TO VELOCITY
+        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+    }
     //End Unity Engine Code
 
     public void init(int stackPosition, Vector3 forward) {
@@ -68,4 +75,13 @@ public class SnakeSegmentBehavior : MonoBehaviour {
         return mNextSegment != null;
     }
 
+
+    void OnCollisionEnter(Collision col)
+    {
+        if(col.gameObject.name.Contains("SnakeSegment"))
+        {
+            print(col.gameObject.name);
+            print("YOU LOSE!");
+        }
+    }
 }
