@@ -3,6 +3,9 @@ using System.Collections;
 
 
 public class SnakeSegmentBehavior : MonoBehaviour {
+    public static string tagName = "SnakeSegmentTag";
+    public static float radius = 1.0f;
+
     // Members
     private int mStackPosition = 0;
     private Transform mNextSegment = null;
@@ -13,6 +16,7 @@ public class SnakeSegmentBehavior : MonoBehaviour {
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
+        gameObject.tag = tagName;
     }
 	
 	// Update is called once per frame
@@ -23,7 +27,7 @@ public class SnakeSegmentBehavior : MonoBehaviour {
     void FixedUpdate()
     {
         // DESTROY ALL PHYSICS EFFECTS TO VELOCITY
-        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        //rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
     }
     //End Unity Engine Code
 
@@ -75,13 +79,20 @@ public class SnakeSegmentBehavior : MonoBehaviour {
         return mNextSegment != null;
     }
 
-
+    /*
     void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.name.Contains("SnakeSegment"))
+        rb.velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        if (col.gameObject.name.Contains("SnakeSegment"))
         {
             print(col.gameObject.name);
             print("YOU LOSE!");
         }
+        else if (col.gameObject.name.Contains("Apple"))
+        {
+            Destroy(col.gameObject);
+            print("Apple consumed!");
+        }
     }
+    */
 }
