@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SnakeSegmentTag
   - AppleTag
+  - WallTag
   layers:
   - Default
   - TransparentFX

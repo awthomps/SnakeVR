@@ -436,7 +436,11 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'SNAKE VR
 
-    Game will start soon'
+    Game will start soon.
+
+    Avoid walls and trees!
+
+    Collect apples!'
 --- !u!222 &1355580452
 CanvasRenderer:
   m_ObjectHideFlags: 0

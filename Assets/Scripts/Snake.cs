@@ -71,7 +71,7 @@ public class Snake : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.name.Contains("SnakeSegment") && isNotHead(col))
+        if (col.CompareTag("WallTag") || (col.name.Contains("SnakeSegment") && isNotHead(col)))
         {
             print(col.name);
             print("YOU LOSE!");
