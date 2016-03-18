@@ -4,7 +4,7 @@ using System.Collections;
 
 public class SnakeSegmentBehavior : MonoBehaviour {
     public static string tagName = "SnakeSegmentTag";
-    public static float radius = 1.0f;
+    public static float radius = 0.5f;
 
     // Members
     private int mStackPosition = 0;
@@ -77,6 +77,11 @@ public class SnakeSegmentBehavior : MonoBehaviour {
 
     public bool isNotTail() {
         return mNextSegment != null;
+    }
+
+    public int stackPosition()
+    {
+        return mStackPosition;
     }
 
     /*

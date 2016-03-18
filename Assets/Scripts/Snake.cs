@@ -37,7 +37,6 @@ public class Snake : MonoBehaviour {
 	// Update is called once per physics cycle
 	void FixedUpdate ()
     {
-        HandleCollisions();
 
         //force cycle distance dependency.
         if (debug)
@@ -70,51 +69,23 @@ public class Snake : MonoBehaviour {
         }
     }
 
-    private void HandleCollisions()
+    void OnTriggerEnter(Collider col)
     {
-        HandleSnakeSegmentCollisions();
-        HandleAppleCollisions();
-    }
-
-    private void HandleSnakeSegmentCollisions()
-    {
-        //Check for snake segments to see if game over (ignore head)
-        GameObject[] snakeSegments = GameObject.FindGameObjectsWithTag(SnakeSegmentBehavior.tagName);
-        foreach (GameObject snakeSegment in snakeSegments)
+        if (col.name.Contains("SnakeSegment") && isNotHead(col))
         {
-            float distanceToSnakeSegment = Vector3.Distance(transform.position, snakeSegment.transform.position);
-            if (distanceToSnakeSegment <= SnakeSegmentBehavior.radius)
-            {
-                if (snakeSegment.name.Contains("SnakeSegment") && snakeSegment != head)
-                {
-                    print(snakeSegment.name);
-                    print("YOU LOSE!");
-                    lost = true;
-                }
-            }
+            print(col.name);
+            print("YOU LOSE!");
+            lost = true;
         }
-    }
-
-    private void HandleAppleCollisions()
-    {
-        //Find any apples that may have been consumed.
-        GameObject[] apples = GameObject.FindGameObjectsWithTag(AppleBehavior.tagName);
-        List<GameObject> applesToDestroy = new List<GameObject>();
-        foreach (GameObject apple in apples)
+        else if (col.CompareTag(AppleBehavior.tagName))
         {
-            float distancetoApple = Vector3.Distance(transform.position, apple.transform.position);
-            if (distancetoApple <= AppleBehavior.radius)
-            {
-                applesToDestroy.Add(apple);
-            }
-        }
-
-        //Destroy consumed apple and mark for adding segments:
-        foreach (GameObject apple in applesToDestroy)
-        {
-            //TODO: carry out special case for apple if there is one:
-            Destroy(apple);
+            Destroy(col.gameObject);
             mNumSegmentsToAdd++;
         }
+    }
+
+    bool isNotHead(Collider col)
+    {
+        return (((SnakeSegmentBehavior)col.GetComponent<SnakeSegmentBehavior>()).stackPosition()) != mNextSnakeSegmentBehavior.stackPosition();
     }
 }
