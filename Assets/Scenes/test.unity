@@ -1027,6 +1027,10 @@ Prefab:
       propertyPath: m_BlockingMask.m_Bits
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2012576, guid: 5e73a0653c25f4243a9dfdcac890b454, type: 2}
+      propertyPath: m_Depth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5e73a0653c25f4243a9dfdcac890b454, type: 2}
   m_IsPrefabParent: 0
