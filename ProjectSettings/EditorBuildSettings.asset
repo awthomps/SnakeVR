@@ -6,6 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/gameovertest.unity
+    path: Assets/Scenes/mainmenu.unity
+  - enabled: 1
+    path: Assets/Scenes/largetestmap.unity
   - enabled: 1
     path: Assets/Scenes/test.unity
+  - enabled: 1
+    path: Assets/Scenes/gameovertest.unity

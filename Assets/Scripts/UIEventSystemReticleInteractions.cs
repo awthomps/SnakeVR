@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class UIEventSystemReticleInteractions : MonoBehaviour {
     public float timeUntilTrigger = 3.0f;
 
+    private string arcadeModeScene = "";
+    private string testScene = "test";
+    private string largeTestMapScene = "largetestmap";
     private float elapsedTime = 0.0f;
     private bool isHighlighted;
     // Use this for initialization
@@ -68,6 +72,10 @@ public class UIEventSystemReticleInteractions : MonoBehaviour {
     void engageTrigger()
     {
         print("Trigger engaged");
+        if (gameObject.name.Contains("TestMode"))
+            SceneManager.LoadScene(testScene);
+        else if (gameObject.name.Contains("LargeTestMap"))
+            SceneManager.LoadScene(largeTestMapScene);
     }
     public void highlight(bool highlight)
     {
