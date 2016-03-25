@@ -10,28 +10,32 @@ public class Snake : MonoBehaviour {
 
     public Object prefab;
     private string gameOverScene = "gameovertest";
-    private GameObject head;
+
+    private GameObject mHead;
     private float speed = 0.022f;
     private SnakeSegmentBehavior mNextSnakeSegmentBehavior;
-    private Transform stereoCamera;
-    private float spawnTimer = 0.0f;
-    private float moveTimer = 0.0f; // depends on cycleDistance
-    private float moveTimeDelay = 1.0f;
+    private Transform mStereoCamera;
+    private float mSpawnTimer = 0.0f;
+    private float mMoveTimer = 0.0f; // depends on cycleDistance
+    private float mMoveTimeDelay = 1.0f;
     private int mNumSegmentsToAdd = 0;
-    private bool lost = false;
+    private bool mLost = false;
+    private int mSize = 0;
+    private int mLastSize = 0;
+    private float mIncreaseSpeedModifier = 0.001f;
 
     // Use this for initialization
     void Start () {
         // Create the snake head.
-        head = (GameObject) Instantiate(prefab, transform.position, transform.rotation);
-        mNextSnakeSegmentBehavior = head.GetComponent<SnakeSegmentBehavior>();
+        mHead = (GameObject) Instantiate(prefab, transform.position, transform.rotation);
+        mNextSnakeSegmentBehavior = mHead.GetComponent<SnakeSegmentBehavior>();
         mNextSnakeSegmentBehavior.init(0, transform.forward);
 
         //force cycle distance dependency.
-        moveTimeDelay = speed / cycleDistance;
+        mMoveTimeDelay = speed / cycleDistance;
 
         //Acquire Camera for directions
-        stereoCamera = transform.FindChild("Head").FindChild("Main Camera");
+        mStereoCamera = transform.FindChild("Head").FindChild("Main Camera");
     }
 	
 	// Update is called once per physics cycle
@@ -41,31 +45,39 @@ public class Snake : MonoBehaviour {
         //force cycle distance dependency.
         if (debug)
         {
-            moveTimeDelay = speed / cycleDistance;
+            mMoveTimeDelay = speed / cycleDistance;
         }
+        if (mSize != mLastSize)
+        {
+            //TODO: FIX THIS
+            //mNextSnakeSegmentBehavior.grow(mSize * mIncreaseSpeedModifier * 10);
+            mLastSize = mSize;
+        }
+            
 
-        spawnTimer += Time.deltaTime;
-        moveTimer += Time.deltaTime;
+        mSpawnTimer += Time.deltaTime;
+        mMoveTimer += Time.deltaTime;
         Vector3 oldPosition = transform.position;
-        transform.position += (new Vector3(stereoCamera.forward.x, 0.0f, stereoCamera.forward.z).normalized * cycleDistance);
+        transform.position += (new Vector3(mStereoCamera.forward.x, 0.0f, mStereoCamera.forward.z).normalized * (cycleDistance + (mSize * mIncreaseSpeedModifier)));
 
-        if(lost)
+        if(mLost)
         {
             SceneManager.LoadScene(gameOverScene);
         }
-        else if (moveTimer >= moveTimeDelay)
+        else if (mMoveTimer >= mMoveTimeDelay)
         {
             if (mNumSegmentsToAdd > 0)
             {
-                spawnTimer = 0.0f;
-                mNextSnakeSegmentBehavior.addNewSnakeSegment(0, transform.position, transform.rotation, stereoCamera.forward);
+                mSpawnTimer = 0.0f;
+                mNextSnakeSegmentBehavior.addNewSnakeSegment(0, transform.position, transform.rotation, mStereoCamera.forward);
                 mNumSegmentsToAdd--;
+                mSize++;
             }
             else
             {
                 mNextSnakeSegmentBehavior.propogatePosition(transform.position);
             }
-            moveTimer = 0.0f;
+            mMoveTimer = 0.0f;
         }
     }
 
@@ -75,7 +87,7 @@ public class Snake : MonoBehaviour {
         {
             print(col.name);
             print("YOU LOSE!");
-            lost = true;
+            mLost = true;
         }
         else if (col.CompareTag(AppleBehavior.tagName))
         {

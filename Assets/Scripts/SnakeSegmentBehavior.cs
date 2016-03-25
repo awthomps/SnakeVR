@@ -84,6 +84,13 @@ public class SnakeSegmentBehavior : MonoBehaviour {
         return mStackPosition;
     }
 
+    public void grow(float sizeIncrease)
+    {
+        transform.localScale += new Vector3(0.0f, 0.0f, sizeIncrease);
+        if(isNotTail())
+            mNextSnakeSegmentBehavior.grow(sizeIncrease);
+    }
+
     /*
     void OnCollisionEnter(Collision col)
     {
