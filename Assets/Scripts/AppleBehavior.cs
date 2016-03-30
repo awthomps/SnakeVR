@@ -5,7 +5,7 @@ public class AppleBehavior : MonoBehaviour {
     public static string tagName = "AppleTag";
     public static float radius = 1.0f;
     public float speed = 1.0f;
-    public float ocillatation = 0.125f;
+    public float oscillatation = 0.125f;
     private float time = 0.0f;
     private float startY;
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class AppleBehavior : MonoBehaviour {
     void FixedUpdate()
     {
         time += Time.deltaTime;
-        float height = (ocillatation * Mathf.Sin(speed * time)) + startY;
+        float height = (oscillatation * Mathf.Sin(speed * time)) + startY;
         Vector3 pos = new Vector3(transform.position.x, height, transform.position.z);
         transform.position = pos;
     }
