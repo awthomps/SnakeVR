@@ -11,6 +11,7 @@ GameObject:
   - 33: {fileID: 3351378}
   - 135: {fileID: 13535356}
   - 23: {fileID: 2381234}
+  - 114: {fileID: 11409820}
   m_Layer: 0
   m_Name: Apple
   m_TagString: AppleTag
@@ -63,6 +64,19 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 199836}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11409820
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 199836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e48a38a5a9061e3429563756d7e2801c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
+  ocillatation: 0.125
 --- !u!135 &13535356
 SphereCollider:
   m_ObjectHideFlags: 1
