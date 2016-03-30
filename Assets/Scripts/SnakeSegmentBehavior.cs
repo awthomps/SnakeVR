@@ -91,6 +91,15 @@ public class SnakeSegmentBehavior : MonoBehaviour {
             mNextSnakeSegmentBehavior.grow(sizeIncrease);
     }
 
+    public void lookForward(Vector3 lookAtPoint)
+    {
+        transform.LookAt(lookAtPoint);
+        if(isNotTail())
+        {
+            mNextSnakeSegmentBehavior.lookForward(transform.position);
+        }
+    }
+
     /*
     void OnCollisionEnter(Collision col)
     {

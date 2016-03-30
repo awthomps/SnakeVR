@@ -50,7 +50,7 @@ public class Snake : MonoBehaviour {
         if (mSize != mLastSize)
         {
             //TODO: FIX THIS
-            //mNextSnakeSegmentBehavior.grow(mSize * mIncreaseSpeedModifier * 10);
+            mNextSnakeSegmentBehavior.grow(mSize * mIncreaseSpeedModifier * 10);
             mLastSize = mSize;
         }
             
@@ -78,6 +78,8 @@ public class Snake : MonoBehaviour {
                 mNextSnakeSegmentBehavior.propogatePosition(transform.position);
             }
             mMoveTimer = 0.0f;
+            Vector3 forwardXZ = new Vector3(mStereoCamera.forward.x, 0.0f, mStereoCamera.forward.z);
+            mNextSnakeSegmentBehavior.lookForward(transform.position + forwardXZ);
         }
     }
 
