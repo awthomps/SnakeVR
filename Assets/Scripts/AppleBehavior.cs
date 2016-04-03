@@ -4,19 +4,21 @@ using System.Collections;
 public class AppleBehavior : MonoBehaviour {
     public static string tagName = "AppleTag";
     public static float radius = 1.0f;
-    public float speed = 1.0f;
-    public float oscillatation = 0.125f;
+    public float speed = 2.0f;
+    public float oscillatation = 0.0675f;
     private float time = 0.0f;
     private float startY;
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
         gameObject.tag = tagName;
         startY = transform.position.y;
         time = 1 - (2 * Random.value);
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+    // Update is called once per frame
+    void Update ()
     {
         
 	}

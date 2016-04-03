@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Snake : MonoBehaviour {
@@ -23,6 +22,8 @@ public class Snake : MonoBehaviour {
     private int mSize = 0;
     private int mLastSize = 0;
     private float mIncreaseSpeedModifier = 0.001f;
+    private Text[] scoreTexts;
+    private int score;
 
     // Use this for initialization
     void Start () {
@@ -36,6 +37,9 @@ public class Snake : MonoBehaviour {
 
         //Acquire Camera for directions
         mStereoCamera = transform.FindChild("Head").FindChild("Main Camera");
+
+        //Initialize Scoring text
+        InitScoreText();
     }
 	
 	// Update is called once per physics cycle
@@ -68,6 +72,7 @@ public class Snake : MonoBehaviour {
         {
             if (mNumSegmentsToAdd > 0)
             {
+                IncrementScore();
                 mSpawnTimer = 0.0f;
                 mNextSnakeSegmentBehavior.addNewSnakeSegment(0, transform.position, transform.rotation, mStereoCamera.forward);
                 mNumSegmentsToAdd--;
@@ -101,5 +106,33 @@ public class Snake : MonoBehaviour {
     bool isNotHead(Collider col)
     {
         return (((SnakeSegmentBehavior)col.GetComponent<SnakeSegmentBehavior>()).stackPosition()) != mNextSnakeSegmentBehavior.stackPosition();
+    }
+
+    private void InitScoreText()
+    {
+        score = 0;
+        scoreTexts = new Text[2];
+        int scoreTextsIndex = 0;
+        Text[] textObjects = GameObject.FindObjectsOfType<Text>();
+        foreach (Text text in textObjects)
+        {
+            if (text.name.Contains("Score"))
+            {
+                scoreTexts[scoreTextsIndex] = text;
+                scoreTextsIndex++;
+            }
+        }
+    }
+
+    private void IncrementScore()
+    {
+        score++;
+        foreach (Text text in scoreTexts)
+        {
+            if(text != null)
+            {
+                text.text = "Score: " + score;
+            }
+        }
     }
 }
