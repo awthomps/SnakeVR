@@ -1117,6 +1117,22 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 11496334, guid: e417e675009473d41b432810e41f0b02, type: 2}
+      propertyPath: appleSpawnUpperRight.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496334, guid: e417e675009473d41b432810e41f0b02, type: 2}
+      propertyPath: appleSpawnUpperRight.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496334, guid: e417e675009473d41b432810e41f0b02, type: 2}
+      propertyPath: appleSpawnLowerLeft.z
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 11496334, guid: e417e675009473d41b432810e41f0b02, type: 2}
+      propertyPath: appleSpawnLowerLeft.x
+      value: -7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e417e675009473d41b432810e41f0b02, type: 2}
   m_IsPrefabParent: 0

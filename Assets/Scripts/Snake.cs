@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public class Snake : MonoBehaviour {
     public float cycleDistance = 0.022f; //determines the 
     public bool debug = true;
-
+    public Vector3 appleSpawnUpperRight = new Vector3(7.0f, 0.5f, 7.0f);
+    public Vector3 appleSpawnLowerLeft = new Vector3(-7.0f, 0.5f, -7.0f);
+    public Object applePrefab;
 
     public Object prefab;
     private string gameOverScene = "gameovertest";
@@ -54,7 +56,7 @@ public class Snake : MonoBehaviour {
         if (mSize != mLastSize)
         {
             //TODO: FIX THIS
-            mNextSnakeSegmentBehavior.grow(mSize * mIncreaseSpeedModifier * 10);
+            //mNextSnakeSegmentBehavior.grow(mSize * mIncreaseSpeedModifier * 10);
             mLastSize = mSize;
         }
             
@@ -62,9 +64,10 @@ public class Snake : MonoBehaviour {
         mSpawnTimer += Time.deltaTime;
         mMoveTimer += Time.deltaTime;
         Vector3 oldPosition = transform.position;
-        transform.position += (new Vector3(mStereoCamera.forward.x, 0.0f, mStereoCamera.forward.z).normalized * (cycleDistance + (mSize * mIncreaseSpeedModifier)));
+        //transform.position += (new Vector3(mStereoCamera.forward.x, 0.0f, mStereoCamera.forward.z).normalized * (cycleDistance + (mSize * mIncreaseSpeedModifier)));
+        transform.position += (new Vector3(mStereoCamera.forward.x, 0.0f, mStereoCamera.forward.z).normalized * cycleDistance);
 
-        if(mLost)
+        if (mLost)
         {
             SceneManager.LoadScene(gameOverScene);
         }
@@ -100,6 +103,7 @@ public class Snake : MonoBehaviour {
         {
             Destroy(col.gameObject);
             mNumSegmentsToAdd++;
+            spawnApple();
         }
     }
 
@@ -134,5 +138,50 @@ public class Snake : MonoBehaviour {
                 text.text = "Score: " + score;
             }
         }
+    }
+
+    private void spawnApple()
+    {
+        Vector3 newApplePosition = randomAppleLocationInRange();
+        while(Physics.OverlapSphere(newApplePosition, 0.2f).Length > 0)
+        {
+            print("Stuck in loop");
+            newApplePosition = randomAppleLocationInRange();
+        }
+        print(newApplePosition);
+        //mNextSegment = (Transform)Instantiate(transform, lastPosition, rotation);
+        GameObject newApple = (GameObject) Instantiate(applePrefab, newApplePosition, new Quaternion());
+    }
+
+    private Vector3 randomAppleLocationInRange()
+    {
+        float x, y, z;
+        if(appleSpawnUpperRight.x == appleSpawnLowerLeft.x)
+        {
+            x = appleSpawnUpperRight.x;
+        }
+        else
+        {
+            x = (Random.value * (appleSpawnUpperRight.x - appleSpawnLowerLeft.x)) - ((appleSpawnUpperRight.x - appleSpawnLowerLeft.x) / 2);
+        }
+
+        if (appleSpawnUpperRight.y == appleSpawnLowerLeft.y)
+        {
+            y = appleSpawnUpperRight.y;
+        }
+        else
+        {
+            y = (Random.value * (appleSpawnUpperRight.y - appleSpawnLowerLeft.y)) - ((appleSpawnUpperRight.y - appleSpawnLowerLeft.y) / 2);
+        }
+
+        if (appleSpawnUpperRight.z == appleSpawnLowerLeft.z)
+        {
+            z = appleSpawnUpperRight.z;
+        }
+        else
+        {
+            z = (Random.value * (appleSpawnUpperRight.z - appleSpawnLowerLeft.z)) - ((appleSpawnUpperRight.z - appleSpawnLowerLeft.z) / 2);
+        }
+        return new Vector3(x, y, z); ;
     }
 }
